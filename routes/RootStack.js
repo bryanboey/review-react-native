@@ -5,6 +5,7 @@ import Home from "../screens/Home";
 import Login from "../screens/Login";
 import { connect } from 'react-redux';
 import HomeTab from "./HomeTab";
+import Register from "../screens/Register";
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,11 @@ function RootStack(props) {
                             name="Login"
                             component={Login}
                             options={{ title: "Login" }}
+                        />
+                        <Stack.Screen
+                            name="Register"
+                            component={Register}
+                            options={{ title: "Register" }}
                         />
                     </Stack.Group>
                 )}

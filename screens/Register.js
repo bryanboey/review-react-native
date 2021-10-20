@@ -1,31 +1,63 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native'
 import { styles } from '../styles';
 import * as yup from 'yup';
 import { Formik } from 'formik';
 import { connect } from 'react-redux'
-import { logIn } from '../store/actions/authActions'
+import { signUp } from '../store/actions/authActions'
 import FlatButton from '../shared/FlatButton';
 
 const loginSchema = yup.object({
     username: yup.string().required(),
     password: yup.string().required(),
+    email: yup.string().required(),
 })
 
-function Login({ logIn, navigation }) {
+function Register({ signUp, auth, navigation }) {
+    const { authError } = auth
+
+    const warningAlert = () => {
+        Alert.alert(
+            'Registration error',
+            `${authError.username ? authError.username : ''}
+            ${authError.email ? authError.email : ''}
+            ${authError.password ? authError.password : ''}`,
+            [
+                {
+                    text: "OK",
+                    style: "OK",
+                }
+            ]
+        )
+    }
+
+    const successAlert = () => {
+        Alert.alert(
+            'Registration successful',
+            `You may now log in.`,
+            [
+                {
+                    text: "OK",
+                    onPress: () => navigation.goBack()
+                }
+            ]
+        )
+    }
+
 
     return (
         <View style={styles.container}>
             <View style={styles.logInContainer}>
-                <Text style={{ paddingLeft: 10, fontSize: 24, fontWeight: '700' }}>Login</Text>
+                <Text style={{ paddingLeft: 10, fontSize: 24, fontWeight: '700' }}>Register</Text>
                 <Formik
                     initialValues={{
                         username: '',
+                        email: '',
                         password: '',
                     }}
                     validationSchema={loginSchema}
                     onSubmit={(values) => {
-                        logIn(values);
+                        signUp(values)
                     }}
                 >
                     {(formikProps) => (
@@ -42,24 +74,35 @@ function Login({ logIn, navigation }) {
                             </Text>
                             <TextInput
                                 style={styles.input}
+                                placeholder="email"
+                                onChangeText={formikProps.handleChange("email")}
+                                value={formikProps.values.email}
+                                onBlur={formikProps.handleBlur("email")}
+                            />
+                            <Text>
+                                {formikProps.touched.email && formikProps.errors.email}
+                            </Text>
+                            <TextInput
+                                style={styles.input}
                                 placeholder="password"
                                 secureTextEntry={true}
                                 onChangeText={formikProps.handleChange("password")}
                                 value={formikProps.values.password}
                                 onBlur={formikProps.handleBlur("password")}
                             />
+                            
                             <FlatButton
-                                text='log in'
+                                text='Register'
                                 onPress={formikProps.handleSubmit}
                             />
                         </View>
                     )}
                 </Formik>
-                <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Text
                         style={{ alignSelf: 'center' }}
                     >
-                        Don't have an account? Register
+                        Already have an account? Login
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -75,8 +118,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        logIn: (creds) => dispatch(logIn(creds)),
+        signUp: (creds) => dispatch(signUp(creds)),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

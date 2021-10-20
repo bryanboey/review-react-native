@@ -46,7 +46,6 @@ const authReducer = (state = initState, action) => {
         case "SIGNUP_SUCCESS":
             console.log('signup success');
             return {
-                loggedUser: action.payload,
                 authError: null
             }
 

@@ -17,6 +17,10 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 20,
         // marginTop: 10,
     },
+    logInContainer: {
+        marginTop: 100,
+        justifyContent: 'center',
+    },
     modalToggle: {
         marginBottom: 15,
         // borderWidth: 1,
@@ -35,7 +39,7 @@ export const styles = StyleSheet.create({
         height: 500,
     },
     logInForm: {
-        marginTop: 32,
+        marginTop: 16,
     },
     input: {
         borderWidth: 1,

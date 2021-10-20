@@ -60,7 +60,7 @@ export const signUp = (credentials) => {
     console.log("signup actions");
     return async (dispatch, getState) => {
         try {
-            const res = await fetch("/api/auth/signup", {
+            const res = await fetch("http://192.168.18.19:8000/api/auth/register/", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -72,13 +72,13 @@ export const signUp = (credentials) => {
             const data = await res.json();
 
             if (res.status === 400) {
-                throw Error(data.errors);
+                throw data;
             }
 
             console.log("this is data", data);
             dispatch({ type: "SIGNUP_SUCCESS", payload: data });
         } catch (err) {
-            dispatch({ type: "SIGNUP_FAILED", payload: err.message });
+            dispatch({ type: "SIGNUP_FAILED", payload: err });
         }
     };
 };

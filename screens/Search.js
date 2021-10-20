@@ -3,6 +3,7 @@ import { View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native'
 import { styles } from '../styles'
 import { connect } from 'react-redux';
 import PlaceCard from '../shared/PlaceCard';
+import AddNewPlace from '../components/AddNewPlace';
 
 function Search({ auth, navigation }) {
     const [loading, setLoading] = useState('');
@@ -68,6 +69,7 @@ function Search({ auth, navigation }) {
                             </PlaceCard>
                         </TouchableOpacity>
                     )}
+                    ListEmptyComponent={AddNewPlace}
                 />
             }
         </View>
