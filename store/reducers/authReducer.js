@@ -1,5 +1,6 @@
 const initState = {
     isLoggedIn: false,
+    loggedUser: null,
     accessToken: null,
     refreshToken: null,
     authError: null
@@ -27,6 +28,20 @@ const authReducer = (state = initState, action) => {
         case "LOGOUT_SUCCESS":
             console.log('logout success');
             return initState;
+
+        case "LOAD_USER_SUCCESS":
+            console.log('load user success');
+            return {
+                ...state,
+                loggedUser: action.payload
+            }
+
+        case "LOAD_USER_FAILED":
+            console.log('load user failed');
+            return {
+                ...state,
+                loggedUser: null,
+            }
         
         case "SIGNUP_SUCCESS":
             console.log('signup success');

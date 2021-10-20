@@ -7,7 +7,8 @@ import PlaceCard from '../shared/PlaceCard';
 function Search({ auth, navigation }) {
     const [loading, setLoading] = useState('');
     const [input, setInput] = useState('');
-    const [searchResults, setSearchResults] = useState(null);
+    const [searchResults, setSearchResults] = useState();
+    const [pageNumber, setPageNumber] = useState(1)
     const { accessToken } = auth
 
     useEffect(() => {
@@ -21,9 +22,9 @@ function Search({ auth, navigation }) {
                         "Content-Type": "application/json",
                     },
                 });
-    
+                
                 const data = await res.json();
-    
+                
                 if (res.status === 400) {
                     
                     throw Error(data.errors);
@@ -42,22 +43,26 @@ function Search({ auth, navigation }) {
         <View style={styles.container}>
             <TextInput
                 style={styles.searchInput}
-                placeholder="Enter a name or address location"
+                placeholder="Enter a name or an address location"
                 value={input}
                 onChangeText={setInput}
             />
             {searchResults &&
-                <FlatList
+                <FlatList 
                     data={searchResults.results}
                     renderItem={({ item }) => (
                         <TouchableOpacity
-                            onPress={() => navigation.navigate('Place Details', item)}
+                            onPress={() => navigation.navigate('Place Details', {
+                                item: item,
+                                token: accessToken,
+                                }
+                            )}
                         >
                             <PlaceCard>
                                 <Text style={styles.titleText}>
                                     {item.name}
                                 </Text>
-                                <Text>
+                                <Text style={styles.bodyText}>
                                     {item.address}
                                 </Text>
                             </PlaceCard>

@@ -30,7 +30,7 @@ function Login({ auth, logIn, navigation }) {
                 }}
             >
                 {(formikProps) => (
-                    <View>
+                    <View style={styles.logInForm}>
                         <TextInput
                             style={styles.input}
                             placeholder="username"
@@ -50,7 +50,7 @@ function Login({ auth, logIn, navigation }) {
                             onBlur={formikProps.handleBlur("password")}
                         />
                         <FlatButton
-                            text='submit'
+                            text='log in'
                             onPress={formikProps.handleSubmit}
                         />
                     </View>

@@ -1,26 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Search from '../screens/Search';
-import Playlist from '../screens/Playlist';
-import Profile from '../screens/Profile';
 import FeedStack from './FeedStack';
-import { FontAwesome } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import ProfileStack from './ProfileStack';
 import SearchStack from './SearchStack';
+import { useDispatch } from 'react-redux';
+import { getCurrentUser } from '../store/actions/authActions';
+import PlaylistStack from './PlaylistStack';
 
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
 export default function HomeTab() {
-
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        dispatch(getCurrentUser())
+    }, [dispatch])
+    
     
     return (
         <Navigator
             screenOptions={{ 
                 headerShown: false,
                 tabBarShowLabel: false,
-                tabBarActiveTintColor: '#e91e63',
+                tabBarInactiveTintColor: "#d7d7d7",
+                tabBarActiveTintColor: '#FFC529',
+                tabBarStyle: {
+                    backgroundColor: '#272d2f'
+                }
             }}
         >
             <Screen
@@ -45,7 +53,7 @@ export default function HomeTab() {
             />
             <Screen
                 name="PlaylistStack"
-                component={Playlist}
+                component={PlaylistStack}
                 options={{
                     tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (

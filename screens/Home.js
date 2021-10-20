@@ -4,6 +4,7 @@ import { styles } from '../styles'
 import { logOut } from '../store/actions/authActions'
 import { connect } from 'react-redux'
 
+
 function Home({ auth, logOut }) {
     const { refreshToken } = auth
 

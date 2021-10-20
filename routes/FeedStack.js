@@ -11,15 +11,19 @@ export default function FeedStack() {
         <Stack.Navigator
             screenOptions={{
                 headerShown: true,
+                headerStyle: {
+                    backgroundColor: '#FFC529',
+                }
             }}
         >
             <Stack.Screen
                 name="Reviews"
                 component={Reviews}
                 options={{
-                    title: "Reviews",
+                    title: "Latest Reviews",
                     headerTitleStyle: {
                         fontWeight: "bold",
+                        color: "#272d2f",
                     },
                     headerTitleAlign: "center",
                 }}

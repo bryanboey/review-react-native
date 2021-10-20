@@ -12,6 +12,9 @@ export default function SearchStack() {
         <Stack.Navigator
             screenOptions={{
                 headerShown: true,
+                headerStyle: {
+                    backgroundColor: '#FFC529'
+                }
             }}
         >
             <Stack.Screen
@@ -30,6 +33,13 @@ export default function SearchStack() {
                 component={PlaceDetails}
                 options={{
                     title: "Place Details",
+                }}
+            />
+            <Stack.Screen
+                name="Review Details"
+                component={ReviewDetails}
+                options={{
+                    title: "Review Details",
                 }}
             />
         </Stack.Navigator>
