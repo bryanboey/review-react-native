@@ -48,6 +48,14 @@ export const styles = StyleSheet.create({
         fontSize: 18,
         borderRadius: 6,
     },
+    playlistInput: {
+        marginTop: 32,
+        borderWidth: 1,
+        borderColor: "#ddd",
+        padding: 10,
+        fontSize: 18,
+        borderRadius: 6,
+    },
     searchInput: {
         borderBottomWidth: 1,
         borderBottomColor: yellow,
@@ -202,5 +210,27 @@ export const styles = StyleSheet.create({
         marginTop: 5,
         fontSize: 14,
         color: '#444',
+    },
+    playlistCard: {
+        borderRadius: 6,
+        elevation: 3,
+        backgroundColor: "#fff",
+        shadowOffset: { width: 1, height: 1 },
+        shadowColor: "#333",
+        shadowOpacity: 0.3,
+        shadowRadius: 2,
+        marginHorizontal: 4,
+        marginVertical: 10,
+    },
+    addToPlaylist: {
+        marginTop: 10,
+    },
+    addToPlaylistBtn: {
+        marginHorizontal: 15,
+        marginVertical: 10,
+        borderRadius: 8,
+        paddingVertical: 8,
+        paddingHorizontal: 10,
+        backgroundColor: yellow,
     }
 });

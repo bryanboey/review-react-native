@@ -26,7 +26,7 @@ function ProfileStack({ auth, logOut }) {
                 name="Profile"
                 component={Profile}
                 options={{
-                    title: `${loggedUser.username}`,
+                    title: `${loggedUser ? loggedUser.username : 'Profile'}`,
                     headerTitleStyle: {
                         fontWeight: "bold",
                         fontSize: 24,

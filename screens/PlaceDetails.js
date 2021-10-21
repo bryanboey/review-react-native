@@ -8,6 +8,7 @@ import {
     Modal,
     Keyboard,
 } from "react-native";
+import { useIsFocused } from '@react-navigation/native'
 import { styles } from "../styles";
 import ReviewCard from "../shared/ReviewCard";
 import FlatButton from "../shared/FlatButton";
@@ -29,11 +30,13 @@ function PlaceDetails({
     const [modalOpen, setModalOpen] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
 
-    const { id } = route.params.item;
+    const isFocused = useIsFocused()
+
+    const { id } = route.params;
 
     useEffect(() => {
         getPlaceDetails(id)
-    }, []);
+    }, [isFocused]);
 
     const { data, error } = places;
 

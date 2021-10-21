@@ -17,7 +17,6 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import moment from "moment";
 import FlatButton from "../shared/FlatButton";
 import EditReviewForm from "./EditReviewForm";
-import { get } from "react-native/Libraries/Utilities/PixelRatio";
 
 function ReviewDetails({
     auth,

@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import { styles } from '../styles'
 import { connect } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import PlaceCard from '../shared/PlaceCard';
 import AddNewPlace from '../components/AddNewPlace';
 
@@ -18,15 +19,16 @@ function Search({ auth, navigation }) {
     const [input, setInput] = useState('');
     const [searchResults, setSearchResults] = useState();
     const [pageNumber, setPageNumber] = useState(1)
-    const { accessToken } = auth
 
     const searchPlaces = async () => {
         try {
+            const tokens = await AsyncStorage.getItem("tokens");
+            const { access } = JSON.parse(tokens);
             const res = await fetch(`http://192.168.18.19:8000/api/establishments/?search=${input}`, {
                 method: "GET",
                 credentials: "include",
                 headers: {
-                    "Authorization": 'Bearer ' + accessToken,
+                    "Authorization": `Bearer ${access}`,
                     "Content-Type": "application/json",
                 },
             });
@@ -66,11 +68,7 @@ function Search({ auth, navigation }) {
                     data={searchResults.results}
                     renderItem={({ item }) => (
                         <TouchableOpacity
-                            onPress={() => navigation.navigate('Place Details', {
-                                item: item,
-                                token: accessToken,
-                                }
-                            )}
+                            onPress={() => navigation.navigate('Place Details', item)}
                         >
                             <PlaceCard>
                                 <Text style={styles.titleText}>

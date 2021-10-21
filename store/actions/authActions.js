@@ -37,13 +37,16 @@ export const logOut = () => {
     return async (dispatch, getState) => {
         console.log('log out action')
         try {
-            // const tokens = await AsyncStorage.getItem('tokens')
-            // const { access } = JSON.parse(tokens)
+            const tokens = await AsyncStorage.getItem('tokens')
+            const { access } = JSON.parse(tokens)
 
             await fetch("http://192.168.18.19:8000/api/auth/logout/", {
                 method: "POST",
                 credentials: "include",
-                headers: authHeader()
+                headers: {
+                    "Authorization": `Bearer ${access}`,
+                    "Content-Type": "application/json",
+                },
             })
 
             dispatch({ type: "LOGOUT_SUCCESS" });
