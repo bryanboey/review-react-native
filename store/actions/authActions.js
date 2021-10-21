@@ -204,7 +204,7 @@ export const refreshUserData = () => {
 // user info
 export const getCurrentUser = () => {
     return async (dispatch, getStates) => {
-
+        console.log('dispatching get current user')
         try {
             const tokens = await AsyncStorage.getItem('tokens')
             const { access } = JSON.parse(tokens)

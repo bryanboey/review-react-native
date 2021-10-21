@@ -12,31 +12,32 @@ function Search({ auth, navigation }) {
     const [pageNumber, setPageNumber] = useState(1)
     const { accessToken } = auth
 
-    useEffect(() => {
-        const searchPlaces = async () => {
-            try {
-                const res = await fetch(`http://192.168.18.19:8000/api/establishments/?search=${input}`, {
-                    method: "GET",
-                    credentials: "include",
-                    headers: {
-                        "Authorization": 'Bearer ' + accessToken,
-                        "Content-Type": "application/json",
-                    },
-                });
+    const searchPlaces = async () => {
+        try {
+            const res = await fetch(`http://192.168.18.19:8000/api/establishments/?search=${input}`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Authorization": 'Bearer ' + accessToken,
+                    "Content-Type": "application/json",
+                },
+            });
+            
+            const data = await res.json();
+            
+            if (res.status === 400) {
                 
-                const data = await res.json();
-                
-                if (res.status === 400) {
-                    
-                    throw Error(data.errors);
-                }
-                setSearchResults(data)
-                setLoading(false)
+                throw Error(data.errors);
             }
-            catch (err) {
-                console.log(err)
-            }
+            setSearchResults(data)
+            setLoading(false)
         }
+        catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
         searchPlaces()
     }, [input])
 

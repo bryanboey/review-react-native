@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     },
     logInContainer: {
         marginTop: 100,
-        justifyContent: 'center',
+        justifyContent: "center",
     },
     modalToggle: {
         marginBottom: 15,
@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
     },
     button: {
         marginHorizontal: 16,
-        marginVertical: 16,
+        marginVertical: 8,
         borderRadius: 8,
         paddingVertical: 8,
         paddingHorizontal: 10,
@@ -130,10 +130,10 @@ export const styles = StyleSheet.create({
         marginBottom: 0,
     },
     icons: {
-        flexDirection: 'row',
+        flexDirection: "row",
         height: 18,
         width: 18,
-        resizeMode: 'contain',
+        resizeMode: "contain",
         marginBottom: 24,
     },
     reviewDetailsBodyText: {
@@ -162,23 +162,44 @@ export const styles = StyleSheet.create({
         marginBottom: 8,
     },
     placeDetailsReviewRating: {
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
+        flexDirection: "row",
+        justifyContent: "flex-start",
         height: 18,
-        resizeMode: 'contain',
+        resizeMode: "contain",
         marginBottom: 8,
     },
     picker: {
-        alignSelf: 'center',
+        alignSelf: "center",
         marginVertical: 30,
         width: 150,
         padding: 10,
         borderWidth: 1,
         borderColor: "#666",
-      },
+    },
     headerBtn: {
         paddingRight: 15,
         fontWeight: "700",
         fontSize: 16,
+    },
+    profileContainer: {
+        marginTop: 10,
+        alignItems: "center",
+        borderColor: yellow,
+    },
+    profileImage: {
+        width: 180,
+        height: 180,
+        borderRadius: 100,
+    },
+    profileName: {
+        marginTop: 5,
+        fontSize: 24,
+        fontWeight: '700',
+        color: black,
+    },
+    profileBio: {
+        marginTop: 5,
+        fontSize: 14,
+        color: '#444',
     }
 });

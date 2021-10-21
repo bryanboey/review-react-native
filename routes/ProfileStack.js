@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, Button, TouchableOpacity, Alert } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Reviews from "../screens/Reviews";
 import Profile from "../screens/Profile";
+import ReviewDetails from "../screens/ReviewDetails";
 import { connect } from 'react-redux';
 import { logOut } from "../store/actions/authActions";
 import { styles } from "../styles";
@@ -56,6 +56,13 @@ function ProfileStack({ auth, logOut }) {
                         </TouchableOpacity>
                         
                     )
+                }}
+            />
+            <Stack.Screen
+                name="Review Details"
+                component={ReviewDetails}
+                options={{
+                    title: "Review Details",
                 }}
             />
         </Stack.Navigator>
