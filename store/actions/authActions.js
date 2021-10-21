@@ -81,6 +81,69 @@ export const signUp = (credentials) => {
     };
 };
 
+// update profile
+export const updateProfile = (id, updates) => {
+    console.log("update profile action");
+    return async (dispatch, getState) => {
+        try {
+            const tokens = await AsyncStorage.getItem('tokens')
+            const { access } = JSON.parse(tokens)
+
+            const res = await fetch(`http://192.168.18.19:8000/api/users/profiles/${id}/`, {
+                method: "PATCH",
+                credentials: "include",
+                headers: {
+                    "Authorization": `Bearer ${access}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(updates),
+            });
+
+            const data = await res.json();
+
+            if (res.status === 500) {
+                throw Error(data.errors);
+            }
+
+            console.log("this is updated data", data);
+            dispatch({ type: "UPDATE_PROFILE_SUCCESS", payload: data });
+        } catch (err) {
+            dispatch({ type: "UPDATE_PROFILE_FAILED", payload: err.message });
+        }
+    };
+};
+
+// user info
+export const getCurrentUser = () => {
+    return async (dispatch, getStates) => {
+        console.log('dispatching get current user')
+        try {
+            const tokens = await AsyncStorage.getItem('tokens')
+            const { access } = JSON.parse(tokens)
+
+            const res = await fetch("http://192.168.18.19:8000/api/users/current/", {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    "Authorization": `Bearer ${access}`,
+                    "Content-Type": "application/json",
+                },
+            });
+
+            const data = await res.json();
+
+            if (res.status === 400) {
+                
+                throw Error(data.errors);
+            }
+
+            dispatch({ type: "LOAD_USER_SUCCESS", payload: data });
+        } catch (err) {
+            dispatch({ type: "LOAD_USER_FAILED", payload: err.message });
+        }
+    };
+};
+
 // check user
 export const userAuth = () => {
     console.log("authenticating user");
@@ -141,34 +204,6 @@ export const changePassword = (credentials) => {
     };
 };
 
-// update profile
-export const updateProfile = (credentials) => {
-    console.log("change password actions");
-    return async (dispatch, getState) => {
-        try {
-            const res = await fetch("/api/auth/updateprofile", {
-                method: "PUT",
-                credentials: "include",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(credentials),
-            });
-
-            const data = await res.json();
-
-            if (res.status === 500) {
-                throw Error(data.errors);
-            }
-
-            console.log("this is updated data", data);
-            dispatch({ type: "UPDATE_PROFILE_SUCCESS", payload: data });
-        } catch (err) {
-            dispatch({ type: "UPDATE_PROFILE_FAILED", payload: err.message });
-        }
-    };
-};
-
 // update user
 export const refreshUserData = () => {
     console.log("refreshing user data");
@@ -197,37 +232,6 @@ export const refreshUserData = () => {
         } catch (err) {
             console.log(err.message);
             dispatch({ type: "USER_NOT_AUTHORIZED", payload: err.message });
-        }
-    };
-};
-
-// user info
-export const getCurrentUser = () => {
-    return async (dispatch, getStates) => {
-        console.log('dispatching get current user')
-        try {
-            const tokens = await AsyncStorage.getItem('tokens')
-            const { access } = JSON.parse(tokens)
-
-            const res = await fetch("http://192.168.18.19:8000/api/profiles/current/", {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    "Authorization": `Bearer ${access}`,
-                    "Content-Type": "application/json",
-                },
-            });
-
-            const data = await res.json();
-
-            if (res.status === 400) {
-                
-                throw Error(data.errors);
-            }
-
-            dispatch({ type: "LOAD_USER_SUCCESS", payload: data });
-        } catch (err) {
-            dispatch({ type: "LOAD_USER_FAILED", payload: err.message });
         }
     };
 };

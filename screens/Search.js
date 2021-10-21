@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput, FlatList, TouchableOpacity } from 'react-native'
+import { 
+    View, 
+    Text, 
+    TextInput, 
+    FlatList, 
+    TouchableOpacity, 
+    TouchableWithoutFeedback, 
+    Keyboard 
+} from 'react-native'
 import { styles } from '../styles'
 import { connect } from 'react-redux';
 import PlaceCard from '../shared/PlaceCard';
@@ -43,12 +51,16 @@ function Search({ auth, navigation }) {
 
     return (
         <View style={styles.container}>
-            <TextInput
-                style={styles.searchInput}
-                placeholder="Enter a name or an address location"
-                value={input}
-                onChangeText={setInput}
-            />
+            <TouchableWithoutFeedback
+                onPress={Keyboard.dismiss}
+            >
+                <TextInput
+                    style={styles.searchInput}
+                    placeholder="Enter a name or an address location"
+                    value={input}
+                    onChangeText={setInput}
+                />
+            </TouchableWithoutFeedback>
             {searchResults &&
                 <FlatList 
                     data={searchResults.results}

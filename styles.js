@@ -198,6 +198,7 @@ export const styles = StyleSheet.create({
         color: black,
     },
     profileBio: {
+        paddingHorizontal: 15,
         marginTop: 5,
         fontSize: 14,
         color: '#444',
