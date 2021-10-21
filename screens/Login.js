@@ -17,6 +17,16 @@ function Login({ logIn, navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.logInContainer}>
+                <Text 
+                    style={{ 
+                        alignSelf: 'center', 
+                        marginBottom: 48, 
+                        fontSize: 48, 
+                        fontWeight: '700'
+                    }}
+                >
+                    foodview.
+                </Text>
                 <Text style={{ paddingLeft: 10, fontSize: 24, fontWeight: '700' }}>Login</Text>
                 <Formik
                     initialValues={{

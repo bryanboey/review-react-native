@@ -9,7 +9,9 @@ import { styles } from "../styles";
 
 const Stack = createStackNavigator();
 
-function ProfileStack({ logOut }) {
+function ProfileStack({ auth, logOut }) {
+
+    const { loggedUser } = auth
 
     return (
         <Stack.Navigator
@@ -24,9 +26,10 @@ function ProfileStack({ logOut }) {
                 name="Profile"
                 component={Profile}
                 options={{
-                    title: "Profile",
+                    title: `${loggedUser.username}`,
                     headerTitleStyle: {
                         fontWeight: "bold",
+                        fontSize: 24,
                     },
                     headerTitleAlign: "left",
                     headerRight: () => (
@@ -59,12 +62,18 @@ function ProfileStack({ logOut }) {
     );
 }
 
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth
+    }
+};
+
 const mapDispatchToProps = (dispatch) => {
     return {
         logOut: (token) => dispatch(
             logOut(token)
         ),
     }
-}
+};
 
-export default connect(null, mapDispatchToProps)(ProfileStack)
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileStack)

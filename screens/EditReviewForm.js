@@ -7,24 +7,24 @@ import FlatButton from "../shared/FlatButton";
 import { Picker } from "@react-native-picker/picker";
 
 const reviewSchema = yup.object({
-    title: yup.string().required().min(4),
-    body: yup.string().required().min(8),
-    star_rating: yup.string().required()
+    title: yup.string().min(4),
+    body: yup.string().min(8),
+    star_rating: yup.string(),
 });
 
-export default function ReviewForm({ handleAddReview }) {
+export default function EditReviewForm({ handleEditReview, title, body, star_rating }) {
     return (
         <View style={styles.container}>
             <Formik
                 initialValues={{
-                    title: "",
-                    body: "",
-                    star_rating: "",
+                    title: title,
+                    body: body,
+                    star_rating: star_rating,
                 }}
                 validationSchema={reviewSchema}
                 onSubmit={(values, actions) => {
                     actions.resetForm();
-                    handleAddReview(values);
+                    handleEditReview(values);
                 }}
             >
                 {(formikprops) => (

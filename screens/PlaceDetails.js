@@ -6,7 +6,8 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     Modal, 
-    Keyboard 
+    Keyboard,
+    Image,
 } from 'react-native'
 import { styles } from '../styles'
 import ReviewCard from '../shared/ReviewCard'
@@ -14,8 +15,10 @@ import FlatButton from '../shared/FlatButton'
 import { MaterialIcons } from '@expo/vector-icons';
 import ReviewForm from './ReviewForm'
 import moment from 'moment';
+import { addReview } from '../store/actions/reviewsActions';
+import { connect } from 'react-redux';
 
-export default function PlaceDetails({ navigation, route }) {
+function PlaceDetails({ addReview, navigation, route }) {
     const [modalOpen, setModalOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false)
@@ -57,37 +60,17 @@ export default function PlaceDetails({ navigation, route }) {
         fetchReviews()
     }, [])
 
-    const addReview = async (review) => {
+    const handleAddReview = (review) => {
         const reviewEntry = {
             establishment_id: id,
             title: review.title,
             body: review.body,
             star_rating: parseInt(review.star_rating)
         }
-        try {
-            const res = await fetch(`http://192.168.18.19:8000/api/reviews/`, {
-                    method: "POST",
-                    credentials: "include",
-                    headers: {
-                        "Authorization": 'Bearer ' + route.params.token,
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(reviewEntry),
-                });
-                
-                const data = await res.json();
-                
-                if (res.status === 500) {
-                    console.log(data)
-                    throw Error(data.errors);
-                }
-                setModalOpen(false)
-        } catch (e) {
-            console.log(e)
-        }
-        
-    };
-
+        addReview(reviewEntry)
+        setModalOpen(false)
+        // consider adding success message
+    }
     return (
         <View style={styles.container}>
     
@@ -97,11 +80,23 @@ export default function PlaceDetails({ navigation, route }) {
                         <Text style={styles.reviewDetailsNameText}>
                             {name}
                         </Text>
-                        <Text style={styles.reviewDetailsAddressText}>
+                        <Text style={styles.placeDetailsAddress}>
                             {address}
                         </Text>
-                        <Text>{avg_star_rating} Stars</Text>
-                        <Text>{review_count} Reviews</Text> 
+                        {avg_star_rating ? (
+                            <View style={styles.placeDetailsReviewRating}>
+                                <Text>{avg_star_rating.toFixed(2)} </Text>
+                                <Image
+                                    style={styles.icons}
+                                    source={require("../assets/icons8-star-filled-48.png")}
+                                />
+                                <Text>{` (${review_count} Reviews)`}</Text> 
+                            </View>
+                        ) : ( <Text>No rating or reviews yet.</Text>)
+                        }
+                        
+                        
+                        
                     </View>
                     <Modal
                         visible={modalOpen}
@@ -115,7 +110,7 @@ export default function PlaceDetails({ navigation, route }) {
                                     style={{ ...styles.modalToggle, ...styles.modalClose }}
                                     onPress={() => setModalOpen(false)}
                                 />
-                                <ReviewForm addReview={addReview} />
+                                <ReviewForm handleAddReview={handleAddReview} />
                             </View>
                         </TouchableWithoutFeedback>
                     </Modal>
@@ -153,3 +148,17 @@ export default function PlaceDetails({ navigation, route }) {
         </View>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        reviews: state.reviews
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addReview: (review) => dispatch(addReview(review))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaceDetails)

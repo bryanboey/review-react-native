@@ -78,9 +78,9 @@ export const styles = StyleSheet.create({
     userText: {
         fontSize: 12,
         flexDirection: "row",
-        // color: blue,
+        // color: coral,
         borderBottomWidth: 1,
-        borderColor: "#eee",
+        borderColor: yellow,
         marginBottom: 4,
         paddingBottom: 2,
         justifyContent: "space-between",
@@ -127,6 +127,13 @@ export const styles = StyleSheet.create({
         fontWeight: "700",
         color: "#444",
         paddingVertical: 2,
+        marginBottom: 0,
+    },
+    icons: {
+        flexDirection: 'row',
+        height: 18,
+        width: 18,
+        resizeMode: 'contain',
         marginBottom: 24,
     },
     reviewDetailsBodyText: {
@@ -147,6 +154,19 @@ export const styles = StyleSheet.create({
     placeCard: {
         // marginHorizontal: 0,
         // // marginVertical: 2,
+    },
+    placeDetailsAddress: {
+        fontSize: 16,
+        color: "#444",
+        paddingVertical: 2,
+        marginBottom: 8,
+    },
+    placeDetailsReviewRating: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        height: 18,
+        resizeMode: 'contain',
+        marginBottom: 8,
     },
     picker: {
         alignSelf: 'center',
