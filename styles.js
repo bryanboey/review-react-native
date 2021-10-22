@@ -211,6 +211,9 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         color: '#444',
     },
+    playlistContainer: {
+        marginTop: 10,
+    },
     playlistCard: {
         borderRadius: 6,
         elevation: 3,
