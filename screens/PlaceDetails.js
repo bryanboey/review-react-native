@@ -4,16 +4,11 @@ import {
     Text,
     FlatList,
     TouchableOpacity,
-    TouchableWithoutFeedback,
-    Modal,
-    Keyboard,
 } from "react-native";
 import { useIsFocused } from '@react-navigation/native'
 import { styles } from "../styles";
 import ReviewCard from "../shared/ReviewCard";
 import FlatButton from "../shared/FlatButton";
-import { MaterialIcons } from "@expo/vector-icons";
-import ReviewForm from "./ReviewForm";
 import moment from "moment";
 import { addReview } from "../store/actions/reviewsActions";
 import { getPlaceDetails } from "../store/actions/placesActions";
@@ -21,13 +16,12 @@ import { connect } from "react-redux";
 import PlaceDetailsHeader from "../components/PlaceDetailsHeader";
 
 function PlaceDetails({
-    addReview,
     getPlaceDetails,
     places,
     navigation,
     route,
 }) {
-    const [modalOpen, setModalOpen] = useState(false);
+
     const [refreshing, setRefreshing] = useState(false);
 
     const isFocused = useIsFocused()
@@ -36,51 +30,23 @@ function PlaceDetails({
 
     useEffect(() => {
         getPlaceDetails(id)
+        console.log('refreshing place details')
     }, [isFocused]);
 
     const { data, error } = places;
-
-    const handleAddReview = (review) => {
-        const reviewEntry = {
-            establishment_id: id,
-            title: review.title,
-            body: review.body,
-            star_rating: parseInt(review.star_rating),
-        };
-        addReview(reviewEntry);
-        setModalOpen(false);
-        // consider adding success message
-    };
 
     return (
         <View style={styles.container}>
             {error && <Text>Something went wrong..</Text>}
             {data && (
                 <>
-                    <Modal visible={modalOpen} animationType="slide">
-                        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                            <View style={styles.modalContent}>
-                                <MaterialIcons
-                                    name="close"
-                                    size={24}
-                                    style={{
-                                        ...styles.modalToggle,
-                                        ...styles.modalClose,
-                                    }}
-                                    onPress={() => setModalOpen(false)}
-                                />
-                                <ReviewForm handleAddReview={handleAddReview} />
-                            </View>
-                        </TouchableWithoutFeedback>
-                    </Modal>
-
                     <FlatList
                         ListHeaderComponent={
                             <>
                                 <PlaceDetailsHeader data={data} />
                                 <FlatButton
                                     text="Add a Review"
-                                    onPress={() => setModalOpen(true)}
+                                    onPress={() => navigation.navigate('AddReviewModal', id)}
                                 />
                             </>
                         }

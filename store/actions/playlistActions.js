@@ -22,7 +22,6 @@ export const createNewPlaylist = (playlist) => {
                 }
             );
             const data = await res.json();
-            console.log(data);
             if (res.status === 500) {
                 console.log("500");
             }

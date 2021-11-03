@@ -13,6 +13,7 @@ function Playlist({ playlists, getUserPlaylists, navigation }) {
 
     useEffect(() => {
         getUserPlaylists();
+        console.log('refreshing playlist')
     }, [isFocused]);
 
     return (
